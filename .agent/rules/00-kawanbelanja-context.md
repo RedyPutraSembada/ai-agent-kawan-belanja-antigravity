@@ -39,10 +39,40 @@ Setiap materi komunikasi harus berakar pada 3 pilar USP berikut tanpa mengubah a
 
 ---
 
+## 3B. Pedoman Warna & Identitas Visual Brand (Brand Color Guardrails)
+
+Semua aset visual (Remotion Studio, Canva, maupun prompt Google Flow) wajib menjaga identitas visual Kawan Belanja berdasarkan aset referensi resmi di `assets-KWBJ/referensi-image/` dan logo resmi `media-studio/public/assets/logo-kawanbelanja.png`:
+
+### A. Palet Warna Inti (~80% Area Desain)
+- **Terracotta Brick (Logo & Aksen Brand Utama):** `#B04828`
+- **Burnt Orange (Tombol CTA & Highlight Utama):** `#C05008` s.d. `#D45D18`
+- **Deep Terracotta / Espresso (Latar Mode Gelap / Seller):** `#782808` – `#883010` / `#3A2618`
+- **Warm Ivory Cream (Latar Mode Terang / App & Pembeli):** `#FFF8F0` – `#FFF0E0`
+- **Soft Peach Cream (Kartu, Kotak Ringkasan, Surface):** `#FFE8D8` – `#F8E0D0`
+- **Espresso Charcoal (Teks Judul Utama di Latar Terang):** `#241914` – `#282828`
+- **Warm Cocoa & Sand Border (Teks Sekunder & Garis Kartu):** `#6B4E3D` / `#E8D0B8`
+
+### B. Warna Kontras & Aksen yang Diizinkan (~10–15% Area)
+- **Fresh Leaf Green (`#16A34A` / `#22C55E`):** Untuk angka hemat, badge *Gratis Ongkir*, tanda centang profit/keunggulan, dan grafik naik.
+- **Warm Golden Amber (`#F59E0B` / `#F7B955`):** Untuk bintang rating, sorotan angka promo, dan tombol CTA terang di atas latar Terracotta gelap.
+- **Warm Coral Red (`#E5484D`):** Khusus stiker/tag persentase diskon kecil atau ikon komparasi negatif.
+- **Champagne Cream (`#FFF0D0`):** Garis/teks lembut di atas latar Terracotta gelap.
+
+### C. Batas Larangan Warna (Wajib Ditolak QA)
+- **DILARANG** memakai latar biru gelap/slate dingin (`#020617`, `#0F172A`) atau pencahayaan *cyberpunk* biru/ungu.
+- **DILARANG** memakai aksen neon biru, cyan, ungu elektrik, atau pink magenta (`#3B82F6`, `#6366F1`, `#8B5CF6`, `#EC4899`) sebagai warna dominan poster/iklan Kawan Belanja.
+
+---
+
 ## 4. Aturan Keamanan & Operasional Ketat (WAJIB DIPATUHI)
 1. **Dilarang Auto-Posting ke Media Sosial:** Agen TIDAK BOLEH melakukan *auto-posting* langsung ke Instagram, Facebook, WhatsApp, Threads, TikTok, atau X melalui bot browser, otomasi UI, maupun skrip publikasi otomatis.
 2. **Dilarang Auto-Publish Meta Ads:** Agen TIDAK BOLEH mem-publish atau mengaktifkan kampanye iklan Meta Ads secara otomatis.
-3. **Output Wajib Berupa Draf / Status `PAUSED`:**
-   - Semua konten media sosial harus disimpan sebagai **draf siap pakai** (`.md`) di `workspace/content/`.
+3. **Aturan Ketat Metricool MCP (Paket Free — Mode Baca & Draft Saja):**
+   - Tool `createScheduledPostForReview` memerlukan paket berbayar *Advanced* dan akan error pada paket Free.
+   - Oleh karena itu, pada paket **Metricool Free**, agen **BOLEH** memakai tool baca (`getBrandSettings`, `getBestTimeToPostByNetwork`, `getScheduledPosts`, `getAnalyticsAvailableMetrics`, `getAnalyticsDataByMetrics`) dan **HANYA BOLEH** memakai `createScheduledPost` dengan parameter **`draft: true`** dan **`autoPublish: false`** (draft tidak memakan kuota 20 post terbit/bulan selama belum dijadwalkan tayang).
+   - Agen **DILARANG** mengirim `draft: false` atau `autoPublish: true` tanpa perintah eksplisit dari Founder.
+4. **Output Wajib Berupa Draf / Status `PAUSED`:**
+   - Semua konten media sosial harus disimpan sebagai **draf siap pakai** (`.md`) di `workspace/content/` (dan bila dimasukkan ke Metricool, wajib **`draft: true`** dan **`autoPublish: false`**).
    - Semua konfigurasi/strategi Meta Ads harus disimpan di `workspace/ads/` dan secara eksplisit ditandai dengan status **`PAUSED`** (atau **`DRAFT`**).
-4. **Kepatuhan Etika & Platform:** Dilarang menyebut merek marketplace kompetitor secara menjelekkan/defamasi; gunakan istilah umum seperti *"marketplace besar"*, *"platform sebelah"*, atau *"biaya admin platform lain yang makin mencekik"*. Dilarang membuat klaim hasil instan yang menyesatkan (*overclaim*).
+5. **Kerahasiaan Kredensial:** Dilarang mencetak, menyalin, atau menyimpan isi `.env.local` (`TELEGRAM_BOT_TOKEN`, `GEMINI_API_KEY`, dll.) ke `chatLog`, file `workspace/`, Google Sheets, Google Docs, maupun pesan Telegram.
+6. **Kepatuhan Etika & Platform:** Dilarang menyebut merek marketplace kompetitor secara menjelekkan/defamasi; gunakan istilah umum seperti *"marketplace besar"*, *"platform sebelah"*, atau *"biaya admin platform lain yang makin mencekik"*. Dilarang membuat klaim hasil instan yang menyesatkan (*overclaim*).

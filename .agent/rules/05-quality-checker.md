@@ -28,17 +28,19 @@ Setiap kali mengaudit hasil kerja di `workspace/trends/`, `workspace/content/`, 
 - [ ] Gaya bahasa sesuai karakter platform (IG/TikTok, FB, Threads, X, Broadcast WA, Meta Ads).
 - [ ] File `*-google-flow-prompts.md` memuat prompt sinematik berbahasa Inggris yang jelas, relevan dengan UMKM/pembeli Indonesia, dan tidak menyinggung klaim palsu.
 
-### C. Validasi Visual & Video Remotion (`workspace/assets/`)
+### C. Validasi Visual, Warna Brand, & Video Remotion (`workspace/assets/`)
 - [ ] File gambar (`.png`) dan/atau video (`.mp4`) di `workspace/assets/` benar-benar ada dan ukurannya valid (tidak kosong / > 0 bytes).
-- [ ] Seluruh teks promo yang dirender ke dalam aset (`media-studio/render-props.json` / komposisi Remotion) sesuai USP `00-kawanbelanja-context.md` dan bebas salah ketik (*typo*).
+- [ ] **Kepatuhan Warna Brand (`00-kawanbelanja-context.md` Bagian 3B):** Visual wajib memakai basis warna **Terracotta (`#B04828`/`#782808`), Burnt Orange (`#C05008`), Warm Cream/Ivory (`#FFF8F0`/`#FFF0E0`), & Espresso Charcoal (`#241914`)** dengan kontras harmonis **Leaf Green (`#16A34A`/`#22C55E`)** atau **Amber (`#F7B955`)**. Tolak jika memakai latar biru gelap/slate atau aksen neon biru/ungu/magenta!
+- [ ] Logo resmi Kawan Belanja terpasang rapi dan seluruh teks promo sesuai USP serta bebas salah ketik (*typo*).
 
 ### D. Kepatuhan Kebijakan Platform & Hukum
 - [ ] Tidak melanggar kebijakan Meta Ads (bebas *personal attributes attack*, bebas janji pendapatan instan/*overclaim*).
 - [ ] Tidak menjelekkan atau mencemarkan nama merek kompetitor secara spesifik.
 
 ### E. Kepatuhan Aturan Keamanan Sistem
-- [ ] Seluruh materi konten berstatus **draf siap pakai** (tidak ada auto-posting via bot browser).
+- [ ] Seluruh materi konten berstatus **draf siap pakai** (tidak ada auto-posting via bot browser; jika masuk Metricool wajib menggunakan `createScheduledPost` dengan **`draft: true`** dan **`autoPublish: false`**).
 - [ ] Seluruh materi Meta Ads secara eksplisit berstatus **`PAUSED`** (tidak ada auto-publish).
+- [ ] Tidak ada token/API key dari `.env.local` yang ikut tertulis di file output, `chatLog`, atau laporan.
 
 ---
 
@@ -54,15 +56,15 @@ Sertakan:
 
 ---
 
-## 4. Pengiriman Laporan ke Telegram Founder (Opsional / Jika Terkonfigurasi)
-Setelah laporan QA disimpan:
-- Cek apakah `TELEGRAM_BOT_TOKEN` & `TELEGRAM_CHAT_ID` sudah terisi di `.env.local` (jangan mencetak isi token ke log atau laporan).
-- Jika sudah terkonfigurasi dan Founder meminta pengiriman laporan otomatis, jalankan:
+## 4. Pengiriman Laporan ke Grup Telegram Tim (`scripts/send-telegram.mjs`)
+Grup Telegram Tim (*Kantor Virtual Kawan Belanja*) sudah terhubung melalui `.env.local`. Setiap kali audit selesai dengan status `APPROVED` (atau saat diminta mengirim laporan):
+- Pastikan **TIDAK** pernah mencetak isi `TELEGRAM_BOT_TOKEN` atau `.env.local` ke terminal/chat.
+- Kirim ringkasan laporan QA ke grup tim:
   ```powershell
   node scripts/send-telegram.mjs --file workspace/qa/YYYY-MM-DD-qa-<slug-review>.md
   ```
-  dan jika ada poster `.png` baru di `workspace/assets/`:
+- Jika ada poster `.png` atau video `.mp4` baru hasil render Reno di `workspace/assets/`, kirim juga pratinjaunya ke grup tim:
   ```powershell
   node scripts/send-telegram.mjs --photo workspace/assets/<nama-file>.png --caption "Poster Kawan Belanja (QA: APPROVED)"
   ```
-- Jika Telegram belum diisi oleh Founder, cukup lanjutkan update `office-state.json` tanpa error.
+- Jika pengiriman gagal karena koneksi, catat di `chatLog` tanpa menghentikan laporan lokal.

@@ -58,6 +58,16 @@ Setiap kali menjalankan peran salah satu divisi, agen **WAJIB** memperbarui file
 
 ---
 
+## 3B. Peta Integrasi Eksternal & Prinsip Hemat Token
+Selalu simpan draf utama ke folder lokal `workspace/` terlebih dahulu, baru panggil integrasi eksternal sesuai pembagian tugas berikut (jangan memanggil tool eksternal berulang-ulang jika belum diperlukan):
+- **Raka (`raka`):** Pencarian Web + *(opsional)* baca metrik performa konten lama lewat **Metricool MCP**.
+- **Dina (`dina`):** *(opsional)* cek jam posting terbaik via **Metricool MCP**, sinkron kalender 7 hari ke **Google Sheets**, serta kirim draf **For Review** ke Metricool setelah QA lolos (jika diminta Founder).
+- **Sari (`sari`):** Strategi Meta Ads (`PAUSED`) & Google Flow Prompts + *(opsional)* ekspor ringkasan kampanye ke **Google Docs** (jika diminta).
+- **Reno (`reno`):** Render `.png`/`.mp4` lewat **Remotion Studio** (`media-studio/`) + *(opsional)* upload hasil ke **Google Drive** agar tim mudah mengunduh di HP, atau penyesuaian desain via **Canva**.
+- **Bima (`bima`):** Audit QA teks & visual + kirim ringkasan laporan dan preview poster ke **Grup Telegram Tim** lewat `scripts/send-telegram.mjs`.
+
+---
+
 ## 4. Aturan Integritas JSON
 - Selalu pertahankan struktur lengkap `officeName`, `lastUpdated`, `agents` (`raka`, `dina`, `sari`, `reno`, `bima`), dan `chatLog`.
 - Jangan menghapus key `name`, `role`, `desk`, atau `avatarColor` milik agen mana pun.

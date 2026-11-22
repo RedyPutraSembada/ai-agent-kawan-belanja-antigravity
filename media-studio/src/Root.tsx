@@ -23,19 +23,19 @@ const defaultSquareProps: PromoSquareProps = {
     "COD & Voucher Gratis Ongkir",
   ],
   imageFile: "",
-  accentTheme: "emerald",
+  theme: "warm-terracotta",
 };
 
 const defaultVerticalProps: PromoVerticalProps = {
-  hook: "Capek margin habis dipotong biaya admin & iklan?",
-  title: "Saatnya Pindah ke Kawan Belanja",
+  hook: "Belanja Hemat & Aman Setiap Hari",
+  title: "Saatnya Belanja di Kawan Belanja",
   subtitle:
-    "Potongan biaya admin hanya flat 4% & sistem Fair Rank bikin produkmu tampil bergiliran di etalase pertama.",
-  badgeText: "UMKM FRIENDLY",
-  ctaText: "Daftar Seller atau Belanja di kawanbelanja.com",
-  productName: "Paket Produk UMKM Lokal Terpilih",
-  productPrice: "Admin 4%",
-  promoVoucher: "Bisa COD + Voucher Gratis Ongkir & Potongan Harga",
+    "Bisa bayar COD, dapat Voucher Gratis Ongkir & Potongan Harga, dan dukung seller UMKM dengan admin flat 4%.",
+  badgeText: "BELANJA CERDAS",
+  ctaText: "Belanja & Buka Toko di kawanbelanja.com",
+  productName: "Produk UMKM Pilihan Terkurasi",
+  productPrice: "Bisa COD",
+  promoVoucher: "Gratis Ongkir + Voucher Potongan Harga",
   imageFile: "",
   uspBadges: [
     "Admin Flat 4%",
@@ -43,6 +43,7 @@ const defaultVerticalProps: PromoVerticalProps = {
     "Bayar di Tempat (COD)",
     "Voucher Potongan Harga",
   ],
+  theme: "warm-light",
 };
 
 const defaultComparisonProps: ComparisonCardProps = {
@@ -74,6 +75,7 @@ const defaultComparisonProps: ComparisonCardProps = {
     },
   ],
   footerCta: "Coba Jualan & Belanja Adil di kawanbelanja.com →",
+  theme: "warm-light",
 };
 
 export const RemotionRoot: React.FC = () => {

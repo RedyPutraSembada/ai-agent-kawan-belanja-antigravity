@@ -27,15 +27,21 @@ Komposisi yang tersedia di `media-studio/src/Root.tsx`:
 
 ## 3. Alur Kerja Wajib Saat Memproduksi Aset
 
-### Langkah 1: Kumpulkan Bahan Visual ke `media-studio/public/assets/` (Jika Dibutuhkan)
-Pilih cara yang paling relevan:
-- **Foto Stok Gratis:** Jalankan skrip pengumpul aset:
-  - Dari URL gambar langsung (tanpa API key):
+### Langkah 1: Kumpulkan Bahan Visual & Patuhi Batas Warna Brand
+- **Aturan Warna Wajib (`00-kawanbelanja-context.md`):**
+  - Gunakan `"theme": "warm-terracotta"` untuk tema Seller UMKM / Admin Flat 4% / Fair Rank, atau `"theme": "warm-light"` untuk tema Pembeli / COD / Voucher / Kurasi.
+  - Dilarang mengubah warna template ke biru gelap/navy atau aksen neon biru/ungu/pink.
+- **Aset Resmi Siap Pakai di `media-studio/public/assets/`:**
+  - `logo-kawanbelanja.png` (logo resmi, otomatis dipakai di header komposisi Remotion).
+  - `app-home.png` dan `app-checkout.png` (mockup layar aplikasi Kawan Belanja).
+  - Anda juga bisa memakai referensi dari `assets-KWBJ/referensi-image/` (salin ke `media-studio/public/assets/` jika ingin dipakai di `imageFile`).
+- **Foto Stok Gratis / Screenshot Baru:**
+  - Dari URL gambar langsung (tanpa API key, pastikan nuansa foto hangat/natural cocok dengan Terracotta & Krem):
     `node media-studio/scripts/fetch-assets.mjs --url "https://..." --out nama-aset.jpg`
   - Atau via Pexels API (jika `PEXELS_API_KEY` terisi di `media-studio/.env`):
-    `node media-studio/scripts/fetch-assets.mjs --query "small business packaging" --orientation square --out seller-umkm.jpg`
-- **Screenshot Asli `kawanbelanja.com`:** Gunakan Browser Control Antigravity untuk membuka `https://kawanbelanja.com`, ambil screenshot fitur etalase/produk/checkout COD, lalu simpan ke `media-studio/public/assets/`.
-- *(Jika tidak ada foto eksternal yang cocok, kosongkan `imageFile: ""` — template Remotion otomatis menampilkan mockup kartu etalase & UI Kawan Belanja yang rapi.)*
+    `node media-studio/scripts/fetch-assets.mjs --query "small business packaging warm" --orientation square --out seller-umkm.jpg`
+  - **Screenshot Asli `kawanbelanja.com`:** Gunakan Browser Control Antigravity untuk membuka `https://kawanbelanja.com` dan simpan ke `media-studio/public/assets/`.
+  - *(Jika tidak memakai foto eksternal, kosongkan `imageFile: ""` — template Remotion otomatis menampilkan mockup kartu Kawan Belanja bernuansa hangat yang rapi.)*
 
 ### Langkah 2: Tulis File Props JSON
 Agar aman dari masalah tanda kutip di PowerShell Windows, selalu tulis props ke file `media-studio/render-props.json` sebelum merender.
@@ -56,6 +62,10 @@ Jalankan dari folder `media-studio/`:
   npx.cmd remotion render src/index.ts PromoVertical ../workspace/assets/YYYY-MM-DD-<slug>-vertical.mp4 --props=./render-props.json
   ```
 
-### Langkah 4: Catat & Serahkan ke Bima (`Meja QA Checker`)
+### Langkah 4: Upload ke Google Drive / Edit Canva (Opsional)
+- **Google Drive (`gdrive` skill):** Jika Founder meminta agar tim bisa langsung mengunduh poster `.png` atau video `.mp4` dari HP, upload file dari `workspace/assets/` ke folder Google Drive Kawan Belanja dan catat tautan Drive-nya di `chatLog`.
+- **Canva (`canva-edit-design` / `canva-resize-for-social-media`):** Gunakan hanya jika Founder secara spesifik meminta adaptasi atau pengeditan template Canva yang sudah ada.
+
+### Langkah 5: Catat & Serahkan ke Bima (`Meja QA Checker`)
 - Pastikan file `.png`/`.mp4` sudah terbentuk di `workspace/assets/` dan ukurannya > 0 bytes.
-- Catat ringkasan aset yang dirender di `chatLog` `office-state.json` dan arahkan handoff ke **Bima** untuk audit final.
+- Catat ringkasan aset yang dirender (beserta tautan Google Drive jika di-upload) di `chatLog` `office-state.json` dan arahkan handoff ke **Bima** untuk audit final.

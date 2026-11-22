@@ -43,6 +43,13 @@ Gunakan struktur standar berikut:
 
 ---
 
-## 4. Batasan Role
+## 4. Integrasi Metricool Analytics (Opsional)
+Jika Founder meminta evaluasi tren berdasarkan performa akun sosial media `kawanbelanja.com` yang sudah terhubung di Metricool:
+- Gunakan tool baca Metricool MCP (`getBrandSettings`, `getAnalyticsAvailableMetrics`, `getAnalyticsDataByMetrics`) untuk melihat format/topik yang paling banyak mendapat interaksi.
+- Jadikan data historis tersebut pelengkap riset pasar sebelum merumuskan angle baru di `workspace/trends/`.
+
+---
+
+## 5. Batasan Role
 - Fokus pada riset, insight, dan sudut pandang pemasaran berbasis konteks bisnis Kawan Belanja (`00-kawanbelanja-context.md`).
 - Jangan menulis konten 7 hari penuh atau struktur iklan Meta Ads di file riset — cukup serahkan insight dan angle terbaik ke Dina & Sari.

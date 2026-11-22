@@ -8,6 +8,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { BrandHeader, KWBJ, type BrandTheme } from "../theme";
 
 export interface PromoSquareProps {
   eyebrow: string;
@@ -17,32 +18,8 @@ export interface PromoSquareProps {
   ctaText: string;
   uspPills: string[];
   imageFile: string;
-  accentTheme?: "emerald" | "indigo" | "amber";
+  theme?: BrandTheme;
 }
-
-const THEME_STYLES: Record<
-  NonNullable<PromoSquareProps["accentTheme"]>,
-  { glow: string; badgeBg: string; ctaBg: string; pillBorder: string }
-> = {
-  emerald: {
-    glow: "rgba(16, 185, 129, 0.28)",
-    badgeBg: "bg-emerald-400 text-slate-950",
-    ctaBg: "bg-emerald-500 text-slate-950",
-    pillBorder: "border-emerald-400/40 bg-emerald-500/15 text-emerald-200",
-  },
-  indigo: {
-    glow: "rgba(99, 102, 241, 0.30)",
-    badgeBg: "bg-indigo-400 text-slate-950",
-    ctaBg: "bg-indigo-500 text-white",
-    pillBorder: "border-indigo-400/40 bg-indigo-500/15 text-indigo-200",
-  },
-  amber: {
-    glow: "rgba(245, 158, 11, 0.28)",
-    badgeBg: "bg-amber-400 text-slate-950",
-    ctaBg: "bg-amber-400 text-slate-950",
-    pillBorder: "border-amber-400/40 bg-amber-500/15 text-amber-200",
-  },
-};
 
 export const PromoSquare: React.FC<PromoSquareProps> = ({
   eyebrow,
@@ -52,7 +29,7 @@ export const PromoSquare: React.FC<PromoSquareProps> = ({
   ctaText,
   uspPills,
   imageFile,
-  accentTheme = "emerald",
+  theme = "warm-terracotta",
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -63,12 +40,12 @@ export const PromoSquare: React.FC<PromoSquareProps> = ({
     config: { damping: 14, stiffness: 120 },
   });
 
-  const translateY = interpolate(entrance, [0, 1], [24, 0]);
+  const translateY = interpolate(entrance, [0, 1], [20, 0]);
   const opacity = interpolate(frame, [0, 15], [0, 1], {
     extrapolateRight: "clamp",
   });
 
-  const theme = THEME_STYLES[accentTheme] ?? THEME_STYLES.emerald;
+  const isDark = theme === "warm-terracotta";
   const hasImage = Boolean(imageFile && imageFile.trim().length > 0);
   const resolvedSrc = hasImage
     ? imageFile.startsWith("http")
@@ -77,22 +54,30 @@ export const PromoSquare: React.FC<PromoSquareProps> = ({
     : "";
 
   return (
-    <AbsoluteFill className="bg-slate-950 text-white font-sans overflow-hidden">
-      {/* Ambient background glow & subtle grid */}
+    <AbsoluteFill
+      className="font-sans overflow-hidden"
+      style={{
+        background: isDark
+          ? `linear-gradient(145deg, ${KWBJ.deepTerracotta} 0%, ${KWBJ.terracottaMid} 48%, ${KWBJ.terracotta} 100%)`
+          : `linear-gradient(145deg, ${KWBJ.ivory} 0%, ${KWBJ.warmCream} 55%, ${KWBJ.peach} 100%)`,
+        color: isDark ? KWBJ.ivory : KWBJ.charcoal,
+      }}
+    >
+      {/* Warm sunlight ambient blobs */}
       <div
-        className="absolute -top-32 -right-24 h-[520px] w-[520px] rounded-full blur-3xl"
-        style={{ backgroundColor: theme.glow }}
-      />
-      <div
-        className="absolute -bottom-36 -left-24 h-[480px] w-[480px] rounded-full blur-3xl"
-        style={{ backgroundColor: "rgba(59, 130, 246, 0.2)" }}
-      />
-      <div
-        className="absolute inset-0 opacity-20"
+        className="absolute -top-28 -right-20 h-[480px] w-[480px] rounded-full blur-3xl"
         style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(148,163,184,0.14) 1px, transparent 1px), linear-gradient(to bottom, rgba(148,163,184,0.14) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
+          backgroundColor: isDark
+            ? "rgba(247, 185, 85, 0.22)"
+            : "rgba(192, 80, 8, 0.16)",
+        }}
+      />
+      <div
+        className="absolute -bottom-32 -left-24 h-[440px] w-[440px] rounded-full blur-3xl"
+        style={{
+          backgroundColor: isDark
+            ? "rgba(58, 38, 24, 0.55)"
+            : "rgba(232, 208, 184, 0.55)",
         }}
       />
 
@@ -100,67 +85,84 @@ export const PromoSquare: React.FC<PromoSquareProps> = ({
         className="relative z-10 flex h-full w-full flex-col justify-between p-12"
         style={{ opacity, transform: `translateY(${translateY}px)` }}
       >
-        {/* Top Bar: Brand + Promo Badge */}
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-indigo-500 to-emerald-400 text-2xl font-black text-white shadow-lg">
-              KB
-            </div>
-            <div>
-              <div className="text-2xl font-extrabold tracking-tight text-white">
-                Kawan Belanja
-              </div>
-              <div className="text-base font-medium text-slate-400">
-                kawanbelanja.com
-              </div>
-            </div>
-          </div>
+        <BrandHeader theme={theme} badgeText={badgeText} />
 
-          <div
-            className={`rounded-full px-5 py-2.5 text-base font-extrabold tracking-wide shadow-lg ${theme.badgeBg}`}
-          >
-            {badgeText}
-          </div>
-        </div>
-
-        {/* Middle Hero: Copy Left + Visual Card Right */}
+        {/* Middle Hero: Copy Left + On-Brand Showcase Right */}
         <div className="my-auto grid grid-cols-12 items-center gap-8 py-4">
           <div className="col-span-7 flex flex-col gap-5">
-            <span className="inline-block w-fit rounded-lg border border-slate-700 bg-slate-900/90 px-3.5 py-1.5 text-sm font-bold uppercase tracking-widest text-blue-300">
+            <span
+              className="inline-block w-fit rounded-xl px-4 py-1.5 text-sm font-extrabold uppercase tracking-wider"
+              style={{
+                backgroundColor: isDark ? "rgba(255, 240, 208, 0.16)" : KWBJ.peach,
+                border: `1.5px solid ${
+                  isDark ? "rgba(255, 240, 208, 0.35)" : KWBJ.peachBorder
+                }`,
+                color: isDark ? KWBJ.champagne : KWBJ.burntOrange,
+              }}
+            >
               {eyebrow}
             </span>
 
-            <h1 className="text-[54px] font-black leading-[1.08] tracking-tight text-white">
+            <h1
+              className="text-[52px] font-black leading-[1.08] tracking-tight"
+              style={{ color: isDark ? "#FFFFFF" : KWBJ.charcoal }}
+            >
               {title}
             </h1>
 
-            <p className="text-2xl font-medium leading-relaxed text-slate-300">
+            <p
+              className="text-[23px] font-medium leading-relaxed"
+              style={{ color: isDark ? KWBJ.champagne : KWBJ.cocoa }}
+            >
               {subtitle}
             </p>
 
-            <div className="mt-2 flex flex-wrap gap-2.5">
+            <div className="mt-1 flex flex-wrap gap-2.5">
               {uspPills.slice(0, 3).map((pill, idx) => (
                 <span
                   key={idx}
-                  className={`rounded-xl border px-4 py-2 text-base font-bold ${theme.pillBorder}`}
+                  className="rounded-xl px-4 py-2 text-base font-bold shadow-sm"
+                  style={{
+                    backgroundColor: isDark
+                      ? "rgba(36, 25, 20, 0.55)"
+                      : "#FFFFFF",
+                    border: `1.5px solid ${
+                      isDark ? "rgba(255, 240, 208, 0.28)" : KWBJ.peachBorder
+                    }`,
+                    color: isDark ? KWBJ.ivory : KWBJ.charcoal,
+                  }}
                 >
-                  ✓ {pill}
+                  <span style={{ color: isDark ? KWBJ.leafGreenBright : KWBJ.leafGreen }}>
+                    ✓
+                  </span>{" "}
+                  {pill}
                 </span>
               ))}
             </div>
           </div>
 
-          {/* Right Side Visual Showcase or Fallback Store Card */}
+          {/* Right Card */}
           <div className="col-span-5">
-            <div className="overflow-hidden rounded-3xl border-2 border-slate-700/80 bg-slate-900/95 p-4 shadow-2xl">
+            <div
+              className="overflow-hidden rounded-3xl p-4 shadow-2xl"
+              style={{
+                backgroundColor: isDark ? KWBJ.ivory : "#FFFFFF",
+                border: `2px solid ${KWBJ.peachBorder}`,
+              }}
+            >
               {hasImage ? (
-                <div className="relative h-[420px] w-full overflow-hidden rounded-2xl bg-slate-800">
-                  <Img
-                    src={resolvedSrc}
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="absolute bottom-3 left-3 right-3 rounded-xl bg-slate-950/85 px-4 py-2.5 backdrop-blur">
-                    <div className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                <div className="relative h-[430px] w-full overflow-hidden rounded-2xl">
+                  <Img src={resolvedSrc} className="h-full w-full object-cover" />
+                  <div
+                    className="absolute bottom-3 left-3 right-3 rounded-xl px-4 py-2.5 shadow-md"
+                    style={{
+                      backgroundColor: "rgba(36, 25, 20, 0.88)",
+                    }}
+                  >
+                    <div
+                      className="text-xs font-extrabold uppercase tracking-wider"
+                      style={{ color: KWBJ.amber }}
+                    >
                       Etalase Fair Rank Aktif
                     </div>
                     <div className="text-base font-bold text-white">
@@ -169,47 +171,101 @@ export const PromoSquare: React.FC<PromoSquareProps> = ({
                   </div>
                 </div>
               ) : (
-                <div className="flex h-[420px] flex-col justify-between rounded-2xl bg-gradient-to-b from-slate-800/90 to-slate-950 p-6">
+                <div
+                  className="flex h-[430px] flex-col justify-between rounded-2xl p-5"
+                  style={{
+                    background: `linear-gradient(180deg, ${KWBJ.warmCream} 0%, ${KWBJ.peach} 100%)`,
+                  }}
+                >
                   <div className="flex items-center justify-between">
-                    <span className="rounded-lg bg-emerald-500/20 px-3 py-1 text-sm font-bold text-emerald-300">
+                    <span
+                      className="rounded-lg px-3 py-1 text-xs font-extrabold tracking-wide text-white"
+                      style={{ backgroundColor: KWBJ.terracotta }}
+                    >
                       FAIR RANK #1
                     </span>
-                    <span className="text-sm font-semibold text-slate-400">
+                    <span
+                      className="text-xs font-bold"
+                      style={{ color: KWBJ.cocoa }}
+                    >
                       Tanpa Bakar Iklan
                     </span>
                   </div>
 
-                  <div className="my-auto space-y-4">
-                    <div className="rounded-2xl border border-slate-700 bg-slate-900/90 p-5">
-                      <div className="text-sm font-semibold text-slate-400">
-                        Biaya Admin Seller
+                  <div className="my-auto space-y-3.5">
+                    <div
+                      className="rounded-2xl p-5 shadow-sm"
+                      style={{
+                        backgroundColor: "#FFFFFF",
+                        border: `1.5px solid ${KWBJ.peachBorder}`,
+                      }}
+                    >
+                      <div
+                        className="text-xs font-bold uppercase tracking-wide"
+                        style={{ color: KWBJ.cocoa }}
+                      >
+                        Potongan Biaya Admin
                       </div>
-                      <div className="mt-1 text-5xl font-black text-emerald-400">
+                      <div
+                        className="mt-1 text-5xl font-black"
+                        style={{ color: KWBJ.burntOrange }}
+                      >
                         FLAT 4%
                       </div>
-                      <div className="mt-1 text-sm text-slate-300">
-                        Margin UMKM lebih terjaga
+                      <div
+                        className="mt-1 text-sm font-semibold"
+                        style={{ color: KWBJ.leafGreen }}
+                      >
+                        ✓ Margin seller UMKM lebih utuh
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="rounded-xl border border-slate-700/80 bg-slate-900/80 p-3.5">
-                        <div className="text-xs text-slate-400">Pembayaran</div>
-                        <div className="mt-1 text-lg font-extrabold text-white">
+                      <div
+                        className="rounded-xl p-3.5"
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          border: `1.5px solid ${KWBJ.peachBorder}`,
+                        }}
+                      >
+                        <div className="text-xs font-semibold" style={{ color: KWBJ.cocoa }}>
+                          Pembayaran
+                        </div>
+                        <div
+                          className="mt-1 text-lg font-black"
+                          style={{ color: KWBJ.charcoal }}
+                        >
                           Bayar COD
                         </div>
                       </div>
-                      <div className="rounded-xl border border-slate-700/80 bg-slate-900/80 p-3.5">
-                        <div className="text-xs text-slate-400">Promo Pembeli</div>
-                        <div className="mt-1 text-lg font-extrabold text-amber-300">
+                      <div
+                        className="rounded-xl p-3.5"
+                        style={{
+                          backgroundColor: "#FFFFFF",
+                          border: `1.5px solid ${KWBJ.peachBorder}`,
+                        }}
+                      >
+                        <div className="text-xs font-semibold" style={{ color: KWBJ.cocoa }}>
+                          Promo Pembeli
+                        </div>
+                        <div
+                          className="mt-1 text-lg font-black"
+                          style={{ color: KWBJ.leafGreen }}
+                        >
                           Gratis Ongkir
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="rounded-xl bg-slate-800/80 px-4 py-2.5 text-center text-sm font-bold text-slate-200">
-                    Voucher Potongan Harga Barang Tersedia
+                  <div
+                    className="rounded-xl px-4 py-2.5 text-center text-sm font-extrabold"
+                    style={{
+                      backgroundColor: KWBJ.peachMid,
+                      color: KWBJ.charcoal,
+                    }}
+                  >
+                    + Voucher Potongan Harga Barang
                   </div>
                 </div>
               )}
@@ -217,13 +273,28 @@ export const PromoSquare: React.FC<PromoSquareProps> = ({
           </div>
         </div>
 
-        {/* Bottom CTA Strip */}
-        <div className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-900/90 px-7 py-5">
-          <div className="text-xl font-bold text-slate-200">
-            Gabung &amp; belanja hemat sekarang
+        {/* Bottom CTA Bar */}
+        <div
+          className="flex items-center justify-between rounded-2xl px-7 py-5 shadow-lg"
+          style={{
+            backgroundColor: isDark ? "rgba(36, 25, 20, 0.72)" : "#FFFFFF",
+            border: `2px solid ${
+              isDark ? "rgba(255, 240, 208, 0.25)" : KWBJ.peachBorder
+            }`,
+          }}
+        >
+          <div
+            className="text-xl font-bold"
+            style={{ color: isDark ? KWBJ.champagne : KWBJ.charcoal }}
+          >
+            Jualan adil, belanja lebih hemat
           </div>
           <div
-            className={`rounded-xl px-6 py-3 text-xl font-black shadow-lg ${theme.ctaBg}`}
+            className="rounded-xl px-6 py-3 text-xl font-black shadow-md"
+            style={{
+              backgroundColor: isDark ? KWBJ.amber : KWBJ.burntOrange,
+              color: isDark ? KWBJ.charcoal : "#FFFFFF",
+            }}
           >
             {ctaText} →
           </div>

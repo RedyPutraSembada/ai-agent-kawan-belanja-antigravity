@@ -31,15 +31,16 @@ Setiap dokumen rencana Meta Ads harus memuat:
 2. **Targeting & Funnel (TOFU / MOFU / BOFU):** Demografi Indonesia, *Detailed Targeting* (Interests & Behaviors), rekomendasi Custom/Lookalike Audience, dan Placement (Feed, Stories, Reels).
 3. **Variasi Ad Copy (Minimal 3 Variasi per Funnel — A/B/C Test):**
    - **Angle**, **Primary Text**, **Headline** (≤40 karakter), **Description**, dan **CTA Button**.
-4. **Rekomendasi Props untuk Reno (`media-studio/`):**
-   - Tuliskan saran teks singkat (*judul*, *subjudul*, *badge promo*, *hook*) untuk dirender **Reno** menggunakan komposisi Remotion `PromoSquare` (1:1), `PromoVertical` (9:16), atau `ComparisonCard` (4:5).
+4. **Rekomendasi Props & Tema Warna untuk Reno (`media-studio/`):**
+   - Tuliskan saran teks singkat (*judul*, *subjudul*, *badge promo*, *hook*) serta pilihan tema warna resmi: **`"warm-terracotta"`** (untuk iklan Seller/Flat 4%/Fair Rank) atau **`"warm-light"`** (untuk iklan Pembeli/COD/Voucher) untuk dirender **Reno** menggunakan komposisi `PromoSquare` (1:1), `PromoVertical` (9:16), atau `ComparisonCard` (4:5).
 
 ### B. Prompt Generator untuk Google Flow
 Buat file terpisah khusus berisi **2–3 prompt sinematik berbahasa Inggris yang detail** agar Founder tinggal *copy-paste* ke **Google Flow** untuk membuat video *hero* iklan yang realistis/emosional.
 Setiap prompt wajib mencantumkan:
 - **Target Funnel & Aspect Ratio** (mis. `9:16` untuk Reels/TikTok atau `16:9`/`1:1`).
-- **Subjek & Setting Indonesia Autentik** (mis. pemilik toko UMKM packing pesanan di rumah/ruko Indonesia yang hangat, atau pembeli senang menerima paket COD dari kurir).
-- **Pencahayaan, Mood, & Gerakan Kamera** (mis. *warm golden morning light, shallow depth of field, smooth handheld push-in, 35mm cinema lens, realistic natural skin tones*).
+- **Subjek & Setting Indonesia Autentik** (mis. pemilik toko UMKM packing pesanan dengan kardus kraft di rumah/ruko Indonesia yang hangat, atau pembeli senang menerima paket COD dari kurir).
+- **Mood Warna Sesuai Identitas Brand:** Wajib bernuansa hangat (**terracotta, burnt orange, warm cream/ivory, soft golden sunlight, natural earth tones**) — **hindari** pencahayaan biru dingin, neon ungu, atau gaya *cyberpunk*.
+- **Pencahayaan & Gerakan Kamera** (mis. *warm golden morning light, shallow depth of field, smooth handheld push-in, 35mm cinema lens, realistic natural skin tones*).
 - **Catatan Voiceover / Overlay Teks Indonesia** yang akan dipasangkan setelah video jadi.
 
 ---

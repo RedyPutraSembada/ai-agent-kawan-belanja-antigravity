@@ -46,5 +46,16 @@ Sertakan:
 
 ---
 
-## 5. Aturan Keamanan
-- **Dilarang keras** melakukan auto-posting ke platform mana pun menggunakan browser/bot. Seluruh hasil hanya berupa draf dokumen Markdown untuk ditinjau oleh **Bima (QA Checker)** dan dipublikasikan secara manual oleh tim manusia.
+## 5. Integrasi Google Sheets & Metricool (Mode Aman)
+1. **Jam Posting Terbaik (Metricool MCP):** Saat menyusun jadwal Hari 1–7, Anda dapat mengecek rekomendasi jam posting lewat `getBestTimeToPostByNetwork` (Metricool MCP) untuk dicantumkan di draf.
+2. **Kalender Konten di Google Sheets:** Jika Founder meminta sinkronisasi ke Spreadsheet, gunakan skill **Google Sheets (`gsheets`)** untuk mengisi kolom: `Tanggal`, `Hari`, `Kanal`, `Format`, `Hook`, `Caption/Naskah`, `Jam Rekomendasi`, dan `Status` (wajib diisi `DRAFT` hingga disetujui Bima/Founder).
+3. **Antrean Draft di Metricool (Khusus Paket Free — Aman & Tidak Makan Kuota):**
+   - Hanya masukkan draf ke Metricool jika diminta Founder (idealnya setelah status QA `APPROVED` dari Bima).
+   - Jangan memanggil `createScheduledPostForReview` karena fitur tersebut khusus paket berbayar tim. Gunakan `createScheduledPost` dengan **WAJIB menyetel `draft: true` dan `autoPublish: false`** (draft tidak terbit otomatis dan tidak mengurangi kuota 20 post terbit/bulan selama belum dijadwalkan).
+   - Untuk melampirkan gambar/video di `media`, gunakan URL publik atau tautan Google Drive (jika Google Drive sudah terhubung di akun Metricool).
+   - Perhatikan batas paket **Metricool Free**: maksimal **20 post terbit/bulan** dan **tidak mencakup X (Twitter)**; draf untuk X & Broadcast WhatsApp tetap dikelola dari file `workspace/content/` & Google Sheets.
+
+---
+
+## 6. Aturan Keamanan
+- **Dilarang keras** melakukan auto-posting ke platform mana pun menggunakan browser/bot atau mengisi `draft: false` / `autoPublish: true` di Metricool tanpa izin eksplisit Founder. Seluruh hasil tetap berstatus draf untuk ditinjau oleh **Bima (QA Checker)** dan disetujui oleh tim manusia.
