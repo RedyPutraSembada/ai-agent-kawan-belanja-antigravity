@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.next-build/
+out/
+.env
+.env.local
+.env*.local
+media-studio/render-props.json

@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500/30 selection:text-indigo-200;
+  }
+}
+
+/* Isometric pixel-office floor pattern */
+.office-floor-grid {
+  background-color: #0b1120;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.12), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1), transparent 45%),
+    linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+}
+
+/* Isometric subtle 3D card edge feel */
+.isometric-desk-card {
+  box-shadow:
+    0 6px 0 0 rgba(15, 23, 42, 0.9),
+    0 14px 28px -10px rgba(2, 6, 23, 0.85);
+}
+
+/* Working animations: typing hands & focused bobbing */
+@keyframes typingBounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2.5px);
+  }
+}
+
+@keyframes handTypeLeft {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes handTypeRight {
+  0%, 100% {
+    transform: translateY(-3px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes screenPulse {
+  0%, 100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Idle animations: gentle breathing & rising coffee steam */
+@keyframes idleBreathe {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-1.5px);
+  }
+}
+
+@keyframes coffeeSteam {
+  0% {
+    transform: translateY(2px) scaleX(1);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(-10px) scaleX(1.2);
+    opacity: 0;
+  }
+}
+
+/* Done animations: celebratory badge float */
+@keyframes doneFloat {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.06);
+  }
+}
+
+@keyframes bubbleEnter {
+  from {
+    opacity: 0.6;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-typing-body {
+  animation: typingBounce 0.65s steps(2, end) infinite;
+}
+
+.animate-hand-left {
+  animation: handTypeLeft 0.35s steps(2, end) infinite;
+}
+
+.animate-hand-right {
+  animation: handTypeRight 0.35s steps(2, end) infinite;
+}
+
+.animate-screen-pulse {
+  animation: screenPulse 1.4s ease-in-out infinite;
+}
+
+.animate-idle-body {
+  animation: idleBreathe 3.2s ease-in-out infinite;
+}
+
+.animate-steam-1 {
+  animation: coffeeSteam 2.2s ease-out infinite;
+}
+
+.animate-steam-2 {
+  animation: coffeeSteam 2.2s ease-out 0.9s infinite;
+}
+
+.animate-done-badge {
+  animation: doneFloat 2s ease-in-out infinite;
+}
+
+.animate-bubble {
+  animation: bubbleEnter 0.25s ease-out;
+}
+
+/* Custom sleek scrollbar for Slack chat log */
+.chat-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.22);
+  border-radius: 9999px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.4);
+}
